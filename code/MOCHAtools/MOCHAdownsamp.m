@@ -1,0 +1,49 @@
+% e2 = MOCHAdownsamp(e[,ratio,type,wn,order]) 
+%
+% Performs downsampling on original EMA trajectories from an utterance.
+% It allows two types of downsampling, based on the Matlab Signal Processing
+% Toolbox functions 'resample' and 'filtfilt'. 'resample' can induce artifacts
+% on the boundaries of temporal trajectories but these trajectories are more
+% smooth; 'filtfilt' produces natural boundaries but less smooth temporal
+% trajectories. Overall, their differences are minor.
+% 
+% In: 
+%  e: see MOCHAframe.
+%  ratio: ratio of downsampling. Default: 5.
+%  type: type of downsampling. Default: 'resample'.
+%  wn: normalized cut-off frequency for double filtering. Default: 0.8.
+%  order: order of the double filter. Default: 100.
+% 
+% Out:
+%  e2: ?x18 vector of downsampled EMA trajectories.
+
+% Any non-mandatory argument can be given the value [] to force it to take
+% its default value.
+
+% Copyright (c) 2008 by Chao Qin and Miguel A. Carreira-Perpinan
+
+function e2 = MOCHAdownsamp(e,ratio,type,wn,order)
+
+% --------------- Argument defaults ---------------- %
+if ~exist('ratio','var') | isempty(ratio) ratio = 5; end;
+if ~exist('type','var') | isempty(type) type = 'resample'; end;
+if ~exist('wn','var') | isempty(wn) wn = 0.8; end;
+if ~exist('order','var') | isempty(order) order = 100; end;
+% --------------- Argument defaults ---------------- %
+
+[N,D] = size(e); 
+e2 = zeros(ceil(N/ratio),D);
+
+% Downsample EMA trajectories
+switch type
+ case 'resample'
+  e2 = resample(e,1,ratio);
+ case 'filtfilt'
+  b = fir1(order,wn); a = 1;
+  for i=1:D
+    e2(:,i) = downsample(filtfilt(b,a,e(:,i)),ratio);
+  end
+ otherwise
+  error('Wrong downsampling type!');
+end
+

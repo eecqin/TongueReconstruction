@@ -1,0 +1,17 @@
+The following are the data used for demonstrating the MOCHAtools 
+(Matlab functions for MOCHA dataset). These data, fsew0_*.* are from the utterance '001' 
+of speaker 'fsew0'. They are extracted from the MOCHA-TIMIT database with file format
+conversion, http://www.cstr.ed.ac.uk/research/projects/artic/mocha.html  
+
+(C) 2008 Chao Qin and Miguel A. Carreira-Perpinan
+
+- fsew0_001.wav: acoustic wave in RIFF format
+
+- fsew0_001.ema: EMA in ASCII format
+
+- fsew0_001.lab: phonetic label in ASCII format
+
+- fsew0_001.lar: laryngograph in RIFF format, which is not used in the MOCHAdemo 
+
+- fsew0_001.mov: animation of vocal tract movement during the utterance along with acoustics and the audio. 
+
